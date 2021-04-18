@@ -1,0 +1,9 @@
+{# Forme lors de la suppression d'un camping car
+1- Demande de confirmation pour la suppression
+2- Suppression définitive du camping car choisi #}
+
+<form method="post" action="{{ path('camping_car_delete', {'id': camping_car.id}) }}" onsubmit="return confirm('Etes-vous certain de vouloir supprimer ce véhicule ?');"> {# Demande de confirmation pour la suppression  #}
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ camping_car.id) }}"> {# Suppression définitive du camping car choisi dans la BDD #}
+    <button class="btn">Supprimer</button> {# Bouton Supprimer #}
+</form>

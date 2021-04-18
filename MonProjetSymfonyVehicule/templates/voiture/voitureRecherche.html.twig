@@ -1,0 +1,59 @@
+{# Extension du modèle base.html.twig #}
+{% extends 'base.html.twig' %}
+
+{# Titre #}
+{% block title %}Voiture Location {% endblock %}
+
+{# Corps #}
+{% block body %}
+
+    <h1>Liste des Voitures disponibles en location</h1>
+
+    {# Formulaire de recherche par marque des voitures #}
+    <form method="POST">
+        <input type="text" name="marque">
+        <input type="submit" name="recherche">
+    </form>
+
+    {# Si un utilisateur est connecté #}
+    {% if app.user %}
+        {# Lien vers Réservation #}
+        <a class="nav-link" href="{{ path('reservation_new') }}"><img src="/img/reserver.jpg" height="50" width="60">
+    {% endif %}
+    {# Div pour afficher les voitures #}
+    <div class="container">
+        <div class ="row">
+            {# Boucle for parcourant toutes les voitures de la Table voiture #}
+            {% for voiture in voiture %}
+                <div class='col-md-4'>
+                    {# Si un utilisateur est connecté #}
+                    {% if app.user %}
+                        {# Bouton permettant de modifier une voiture #}
+                        <a class="btn btn-warning" href="{{ path('voiture_edit', {'id': voiture.id}) }}" role="button">Modifier</a>
+                    {% endif %}
+                    {# Images des voitures, on peut consulter une voiture en cliquant sur l'image #}
+                    <a href={{ path('voiture_show', {'id': voiture.id}) }} title="{{ voiture.marque }}">
+                        <img src='./img/{{ voiture.id }}.jpg' width="350" height="200" />
+                    </a>
+                    {# Div pour la description #}
+                    <div class='description'>
+                        <h2><b>{{ voiture.marque }}</b></h2>
+                        <p><u>Prix :</u> {{ voiture.prix }} €/Jour</p>
+                        <p><u>Année :</u>{{ voiture.annee }}</p>
+                        <p><u>Places :</u> {{ voiture.places }}</p>
+                        <p><u>Moteur :</u>{{ voiture.moteur }}</p>
+                        <p><u>Kilométrage :</u>{{ voiture.kilometrage }}</p>
+                    </div>
+                </div>
+            {# Sinon s'il n'y a pas de voitures #}
+            {% else %}
+                {# Affichage d'un message #}
+                <tr>
+                    <td colspan="8">Aucune voiture correspond à votre recherche</td>
+                </tr>
+        {% endfor %}
+        </div>
+    </div>
+    {# Lien de Retour #}
+    <a class="nav-link" href="{{ path('voiture_index') }}"><img src="/img/retour.jpg" height="50" width="60">
+{% endblock %}

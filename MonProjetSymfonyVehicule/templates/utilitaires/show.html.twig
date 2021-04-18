@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Véhicule Utilitaire{% endblock %}
+
+{% block body %}
+    <h1>{{ utilitaire.marqueU }}</h1>
+    <img src='../img/utilitaire/{{ utilitaire.id}}.jpg' height="200" width="350">
+
+    <div class="container">
+        <div class="row">
+            {% for i in 2..5 %}
+                <div class="col-xs-3">
+                    <a href='../img/utilitaire/{{ utilitaire.id }}.{{ i }}.jpg' class="thumbnail">
+                        <img src='../img/utilitaire/{{ utilitaire.id }}.{{ i }}.jpg' height="60" width="87.5" alt="Image {{ i }}" />
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ utilitaire.id }}</td>
+        </tr>
+        <tr>
+            <th>Marque</th>
+            <td>{{ utilitaire.marqueU }}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ utilitaire.description }}</td>
+        </tr>
+        <tr>
+            <th>Prix</th>
+            <td>{{ utilitaire.prixU }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-secondary" href="{{ path('utilitaires_index') }}" role="button">Liste Utilitaires</a>
+    {% if app.user %}
+        <a class="btn btn-warning" href="{{ path('utilitaires_edit', {'id': utilitaire.id}) }}" role="button">Modifier</a>
+        {{ include('utilitaires/_delete_form.html.twig') }}
+    {% endif %}
+{% endblock %}

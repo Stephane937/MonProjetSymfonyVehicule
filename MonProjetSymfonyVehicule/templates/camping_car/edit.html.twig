@@ -1,0 +1,19 @@
+{# Extension du modèle base.html.twig #}
+{% extends 'base.html.twig' %}
+
+{# Titre #}
+{% block title %}Modifier CampingCar{% endblock %}
+
+{# Corps #}
+{% block body %}
+    <h1>Modifier CampingCar</h1>
+
+    {# inclure le formulaire d'édition #}
+    {{ include('camping_car/_form.html.twig', {'button_label': 'Update'}) }}
+
+    {# Bouton de Retour #}
+    <a class="btn btn-secondary" href="{{ path('camping_car_index') }}" role="button">Retour à la liste des Camping Cars</a>
+
+    {# inclure le formulaire de suppression #}
+    {{ include('camping_car/_delete_form.html.twig') }}
+{% endblock %}

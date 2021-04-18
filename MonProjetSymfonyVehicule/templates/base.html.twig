@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+
+    <title>{% block title %}Location de Véhicules{% endblock %}</title>
+
+    <link rel= "stylesheet" href="https://bootswatch.com/4/superhero/bootstrap.min.css">
+    <link href="css/style.css" rel="stylesheet">
+    <!--Formulaire Connexion -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <!--Bouton Recherche -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    {% block stylesheets %}{% endblock %}
+
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Accueil</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor02">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item ">
+                <a class="nav-link" href="/voiture"><img src="/img/voiture.jpg" height="50" width="50">
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="/utilitaires"><img src="/img/utilitaire.jpg" height="50" width="50">
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="/campingcar"><img src="/img/camping.jpg" height="50" width="60">
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+
+        </ul>
+
+        <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+            <li class="nav-item dropdown">
+                {% if not app.user %}
+            <li class="nav-item ">
+                <a class="nav-link" href="/registration"><img src="/img/register.jpg" height="50" width="110">
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="/login"><img src="/img/login.jpg" height="50" width="150">
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            {% else %}
+                <li class="nav-item ">
+                    <a class="nav-link" href="/logout"><img src="/img/logout.png" height="50" width="60">
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+
+
+</nav>
+
+<div class = "container">
+    {% block body %}{% endblock %}
+</div>
+
+{% block javascripts %}{% endblock %}
+</body>
+</html>

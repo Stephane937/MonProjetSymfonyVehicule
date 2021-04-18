@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Réservations Camping-Car{% endblock %}
+
+{% block body %}
+    <h1>Liste des Réservations Camping-Car</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Ville</th>
+            <th>DateDepart</th>
+            <th>DateRetour</th>
+            <th>Camping-Car</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for reservation_camp  in reservations %}
+            <tr>
+                <td>{{ reservation_camp .id }}</td>
+                <td>{{ reservation_camp .ville }}</td>
+                <td>{{ reservation_camp .dateDepart ? reservation_camp .dateDepart|date('Y-m-d') : '' }}</td>
+                <td>{{ reservation_camp .dateRetour ? reservation_camp .dateRetour|date('Y-m-d') : '' }}</td>
+                <td>{{ reservation_camp .campingcars }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Réservations inexistants</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+

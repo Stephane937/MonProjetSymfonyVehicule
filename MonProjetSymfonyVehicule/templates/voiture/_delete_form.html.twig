@@ -1,0 +1,9 @@
+{# Forme lors de la suppression d'une voiture
+1- Demande de confirmation pour la suppression
+2- Suppression définitive de la voiture choisie #}
+
+<form method="post" action="{{ path('voiture_delete', {'id': voiture.id}) }}" onsubmit="return confirm('Etes-vous certain de vouloir supprimer ce véhicule ?');"> {# Demande de confirmation pour la suppression #}
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ voiture.id) }}"> {# Suppression définitive de la voiture choisie dans la BDD #}
+    <button class="btn">Supprimer</button>
+</form>

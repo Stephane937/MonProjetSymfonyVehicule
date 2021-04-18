@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Réservations Voitures{% endblock %}
+
+{% block body %}
+    <h1>Liste des Réservations des Voitures</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Ville</th>
+                <th>DateDepart</th>
+                <th>DateRetour</th>
+                <th>Voiture</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reservation in reservations %}
+            <tr>
+                <td>{{ reservation.id }}</td>
+                <td>{{ reservation.ville }}</td>
+                <td>{{ reservation.dateDepart ? reservation.dateDepart|date('Y-m-d') : '' }}</td>
+                <td>{{ reservation.dateRetour ? reservation.dateRetour|date('Y-m-d') : '' }}</td>
+                <td>{{ reservation.voitures }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucune réservation</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,19 @@
+{# Extension du modèle base.html.twig #}
+{% extends 'base.html.twig' %}
+
+{# Titre #}
+{% block title %}Modifier Véhicule Utilitaire{% endblock %}
+
+{# Corps #}
+{% block body %}
+    <h1>Modifier Utilitaire</h1>
+
+    {# inclure le formulaire d'édition #}
+    {{ include('utilitaires/_form.html.twig', {'button_label': 'Update'}) }}
+
+    {# Bouton de Retour #}
+    <a class="btn btn-secondary" href="{{ path('utilitaires_index') }}" role="button">Retour à la liste des Véhicules Utilitaires</a>
+
+    {# inclure le formulaire de suppression #}
+    {{ include('utilitaires/_delete_form.html.twig') }}
+{% endblock %}

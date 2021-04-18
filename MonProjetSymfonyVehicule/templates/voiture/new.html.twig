@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout Voiture{% endblock %}
+
+{% block body %}
+    <h1>Ajouter une Voiture</h1>
+
+    <div class='col-sm-4 col-md-7'>
+        <div class="form-group">
+            <img id="visuimg" src={{ asset('img/') }}upload.png>
+            <input class="form-control" type="file" name="photoupload" id="photo">
+        </div>
+    </div>
+
+    {{ include('voiture/_form.html.twig') }}
+
+    <a class="btn btn-secondary" href="{{ path('voiture_index') }}" role="button">Retour à la liste des Voitures</a>
+{% endblock %}

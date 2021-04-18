@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Voiture{% endblock %}
+
+{% block body %}
+    <h1>{{ voiture.marque }}</h1>
+    <img src='../img/{{ voiture.id}}.jpg' height="200" width="350">
+
+    <div class="container">
+        <div class="row">
+            {% for i in 2..5 %}
+            <div class="col-xs-3">
+                <a href="img/{{ voiture.id }}.{{ i }}.jpg" class="thumbnail">
+                    <img src="img/{{ voiture.id }}.{{ i }}.jpg" height="60" width="87.5" alt="Image {{ i }}" />
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ voiture.id }}</td>
+            </tr>
+            <tr>
+                <th>Marque</th>
+                <td>{{ voiture.marque }}</td>
+            </tr>
+            <tr>
+                <th>Moteur</th>
+                <td>{{ voiture.moteur }}</td>
+            </tr>
+            <tr>
+                <th>Kilometrage</th>
+                <td>{{ voiture.kilometrage }}</td>
+            </tr>
+            <tr>
+                <th>Annee</th>
+                <td>{{ voiture.annee }}</td>
+            </tr>
+            <tr>
+                <th>Places</th>
+                <td>{{ voiture.places }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ voiture.prix }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-secondary" href="{{ path('voiture_index') }}" role="button">Liste Voiture</a>
+    {% if app.user %}
+        <a class="btn btn-warning" href="{{ path('voiture_edit', {'id': voiture.id}) }}" role="button">Modifier</a>
+        {{ include('voiture/_delete_form.html.twig') }}
+    {% endif %}
+{% endblock %}

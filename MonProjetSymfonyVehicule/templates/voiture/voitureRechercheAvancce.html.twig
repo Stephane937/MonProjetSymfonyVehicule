@@ -1,0 +1,73 @@
+{# Extension du modèle base.html.twig #}
+{% extends 'base.html.twig' %}
+
+{# Titre #}
+{% block title %}Voiture Location {% endblock %}
+
+{# Corps #}
+{% block body %}
+    <div class="container">
+        <div class="section">
+            <div class="row">
+                <div class="col m6 offset-m3">
+                    <h1>Recherche Avancée</h1>
+                    {# Formulaire de recherche avancée pour les voitures #}
+                    {{ form(search_form) }}
+                </div>
+            </div>
+            {# Si méthode == POST #}
+            {% if app.request.method == 'POST' %}
+                <div class="row">
+                    <div class="col m6 offset-m3">
+                        {# Si pas de voitures #}
+                        {% if cars|length == 0 %}
+                            <tr>
+                                <td colspan="8">Aucune voiture correspond à votre recherche</td>
+                            </tr>
+                        {# Sinon (=si il y a une ou plusieurs voitures) #}
+                        {% else %}
+                            <h2>Résultats de votre Recherche</h2>
+                            <div class="container">
+                                <div class ="row">
+                                    {# Boucle for parcourant toutes les voitures de la Table voiture #}
+                                    {% for voiture in cars %}
+                                        <div class='col-md-4'>
+                                            {# Si un utilisateur est connecté #}
+                                            {% if app.user %}
+                                                {# Bouton permettant de modifier une voiture #}
+                                                <a class="btn btn-warning" href="{{ path('voiture_edit', {'id': voiture.id}) }}" role="button">Modifier</a>
+                                            {% endif %}
+                                            {# Images des voitures, on peut consulter une voiture en cliquant sur l'image #}
+                                            <a href={{ path('voiture_show', {'id': voiture.id}) }} title="{{ voiture.marque }}">
+                                                <img src='./img/{{ voiture.id }}.jpg' width="350" height="200" />
+                                            </a>
+                                            {# Div pour la description #}
+                                            <div class='description'>
+                                                <h2><b>{{ voiture.marque }}</b></h2>
+                                                <p><u>Prix :</u> {{ voiture.prix }} €/Jour</p>
+                                                <p><u>Année :</u>{{ voiture.annee }}</p>
+                                                <p><u>Places :</u> {{ voiture.places }}</p>
+                                                <p><u>Moteur :</u>{{ voiture.moteur }}</p>
+                                                <p><u>Kilométrage :</u>{{ voiture.kilometrage }}</p>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{# Script Javascript #}
+{% block javascripts %}
+{{ parent()}}
+<script>
+    $(document).ready(function() {
+        $('select');
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,70 @@
+{# Extension du modèle base.html.twig #}
+{% extends 'base.html.twig' %}
+
+{# Titre #}
+{% block title %}Utilitaire Location {% endblock %}
+
+{# Corps #}
+{% block body %}
+    <div class="container">
+        <div class="section">
+            <div class="row">
+                <div class="col m6 offset-m3">
+                    <h1>Recherche par Prix</h1>
+                    {# Formulaire de recherche par prix pour les véhicules utilitaires #}
+                    {{ form(search_form) }}
+                </div>
+            </div>
+            {# Si méthode == POST #}
+            {% if app.request.method == 'POST' %}
+                <div class="row">
+                    <div class="col m6 offset-m3">
+                        {# Si pas de véhicules utilitaires #}
+                        {% if utilitaires|length == 0 %}
+                            <tr>
+                                <td colspan="8">Aucune voiture correspond à votre recherche</td>
+                            </tr>
+                        {# Sinon (=si il y a un ou plusieurs véhicules utilitaires) #}
+                        {% else %}
+                            <h2>Résultats de votre Recherche</h2>
+                            <div class="container">
+                                <div class ="row">
+                                    {# Boucle for parcourant tous les véhicules utilitaires de la Table utilitaire #}
+                                    {% for utilitaire in utilitaires %}
+                                        <div class='col-md-4'>
+                                            {# Si un utilisateur est connecté #}
+                                            {% if app.user %}
+                                                {# Bouton permettant de modifier un véhicule utilitaire #}
+                                                <a class="btn btn-warning" href="{{ path('utilitaires_edit', {'id': utilitaire.id}) }}" role="button">Modifier</a>
+                                            {% endif %}
+                                            {# Images des véhicules utilitaires, on peut consulter un véhicule utilitaire en cliquant sur l'image #}
+                                            <a href={{ path('utilitaires_show', {'id': utilitaire.id}) }} title="{{ utilitaire.marqueU }}">
+                                                <img src='./img/utilitaire/{{ utilitaire.id }}.jpg' width="350" height="200" />
+                                            </a>
+                                            {# Div pour la description #}
+                                            <div class='description'>
+                                                <h2><b>{{ utilitaire.marqueU }}</b></h2>
+                                                <p><u>Prix :</u> {{ utilitaire.prixU }} €/Jour</p>
+                                                <p><u>Description :</u>{{ utilitaire.description }}</p>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{# Script Javascript #}
+{% block javascripts %}
+    {{ parent()}}
+    <script>
+        $(document).ready(function() {
+            $('select');
+        });
+    </script>
+{% endblock %}

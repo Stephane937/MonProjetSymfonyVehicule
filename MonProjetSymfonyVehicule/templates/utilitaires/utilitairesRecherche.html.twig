@@ -1,0 +1,56 @@
+{# Extension du modèle base.html.twig #}
+{% extends 'base.html.twig' %}
+
+{# Titre #}
+{% block title %}Véhicules Utilitaires Location {% endblock %}
+
+{# Corps #}
+{% block body %}
+
+    <h1>Liste des Véhicules Utilitaires disponibles en location</h1>
+
+    {# Formulaire de recherche par marque de camping car #}
+    <form method="POST">
+        <input type="text" name="marqueU">
+        <input type="submit" name="recherche">
+    </form>
+
+    {# Si un utilisateur est connecté #}
+    {% if app.user %}
+    {# Lien vers Réservation #}
+        <a class="nav-link" href="{{ path('reservation_new_util') }}"><img src="/img/reserver.jpg" height="50" width="60">
+    {% endif %}
+
+    {# Div pour afficher les véhicules utilitaires #}
+    <div class="container">
+        <div class ="row">
+        {# Boucle for parcourant tous les véhicules utilitaires de la Table utilitaire #}
+        {% for utilitaire in utilitaires %}
+            <div class='col-md-4'>
+                {# Si un utilisateur est connecté #}
+                {% if app.user %}
+                    {# Bouton permettant de modifier un véhicule utilitaire #}
+                    <a class="btn btn-warning" href="{{ path('utilitaires_edit', {'id': utilitaire.id}) }}" role="button">Modifier</a>
+                {% endif %}
+                {# Images des véhicules utilitaires, on peut consulter un véhicule utilitaire en cliquant sur l'image #}
+                <a href={{ path('utilitaires_show', {'id': utilitaire.id}) }} title="{{ utilitaire.marqueU }}">
+                    <img src='./img/utilitaire/{{ utilitaire.id }}.jpg' width="350" height="200" />
+                </a>
+                {# Div pour la description #}
+                <div class='description'>
+                    <h2><b>{{ utilitaire.marqueU }}</b></h2>
+                    <p><u>Prix :</u> {{ utilitaire.prixU }} €/Jour</p>
+                    <p><u>Description :</u>{{ utilitaire.description }}</p>
+                </div>
+            </div>
+        {# Sinon s'il n'y a pas de véhicules utilitaires #}
+        {% else %}
+            <tr>
+                <td colspan="8">Aucun résultat pour votre recherche</td>
+            </tr>
+        {% endfor %}
+        {# Lien de Retour #}
+        <a class="nav-link" href="{{ path('utilitaires_index') }}"><img src="/img/retour.jpg" height="50" width="60"></a>
+        </div>
+    </div>
+    {% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Réservations Utilitares{% endblock %}
+
+{% block body %}
+    <h1>Liste des Réservations Utilitares</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Ville</th>
+            <th>DateDepart</th>
+            <th>DateRetour</th>
+            <th>Véhicule Utilitaire</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for reservation_util  in reservations %}
+            <tr>
+                <td>{{ reservation_util .id }}</td>
+                <td>{{ reservation_util .ville }}</td>
+                <td>{{ reservation_util .dateDepart ? reservation_util .dateDepart|date('Y-m-d') : '' }}</td>
+                <td>{{ reservation_util .dateRetour ? reservation_util .dateRetour|date('Y-m-d') : '' }}</td>
+                <td>{{ reservation_util .utilitaires }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Réservations inexistantes</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+

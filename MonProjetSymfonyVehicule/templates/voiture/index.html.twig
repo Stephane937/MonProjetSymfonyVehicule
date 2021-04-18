@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Voiture Location {% endblock %}
+
+{% block body %}
+
+    <h1>Liste des Voitures disponibles en location</h1>
+
+    {% if app.user %}
+        <a class="nav-link" href="{{ path('reservation_new') }}"><img src="/img/reserver.jpg" height="50" width="60">
+    {% endif %}
+    <a class="btn btn-secondary" href="{{ path('voiture_recherche')}}" role="button">Recherche par Marque</a>
+    <a class="btn btn-secondary" href="{{ path('voiture_rechercheAvancee')}}" role="button">Recherche Avancée</a>
+
+
+    <div class="container">
+        <div class ="row">
+
+
+            {% for voiture in voitures %}
+
+                <div class='col-md-4'>
+                    {% if app.user %}
+                        <a class="btn btn-warning" href="{{ path('voiture_edit', {'id': voiture.id}) }}" role="button">Modifier</a>
+                    {% endif %}
+                    <a href={{ path('voiture_show', {'id': voiture.id}) }} title="{{ voiture.marque }}">
+                        <img src='./img/{{ voiture.id }}.jpg' width="350" height="200" />
+                    </a>
+                    <div class='description'>
+                        <h2><b>{{ voiture.marque }}</b></h2>
+                        <p><u>Prix :</u> {{ voiture.prix }} €/Jour</p>
+                        <p><u>Année :</u>{{ voiture.annee }}</p>
+                        <p><u>Places :</u> {{ voiture.places }}</p>
+                        <p><u>Moteur :</u>{{ voiture.moteur }}</p>
+                        <p><u>Kilométrage :</u>{{ voiture.kilometrage }}</p>
+
+                    </div>
+                </div>
+
+            {% else %}
+                <tr>
+                    <td colspan="8">Aucun résultat pour votre recherche</td>
+                </tr>
+            {% endfor %}
+
+        </div>
+
+        <center>{{ knp_pagination_render(voitures) }}</center>
+
+    </div>
+{% endblock %}

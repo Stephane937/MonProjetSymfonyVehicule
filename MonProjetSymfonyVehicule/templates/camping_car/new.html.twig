@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter CampingCar{% endblock %}
+
+{% block body %}
+    <h1>Ajouter un CampingCar</h1>
+
+    <div class='col-sm-4 col-md-7'>
+        <div class="form-group">
+            <img id="visuimg" src={{ asset('img/') }}upload.png>
+            <input class="form-control" type="file" name="photoupload" id="photo">
+        </div>
+    </div>
+
+    {{ include('camping_car/_form.html.twig') }}
+
+    <a href="{{ path('camping_car_index') }}">Retour à la liste des Camping Cars</a>
+{% endblock %}

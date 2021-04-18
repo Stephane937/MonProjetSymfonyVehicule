@@ -1,0 +1,56 @@
+{# Extension du modèle base.html.twig #}
+{% extends 'base.html.twig' %}
+
+{# Titre #}
+{% block title %}CampingCar Location {% endblock %}
+
+{# Corps #}
+{% block body %}
+
+    <h1>Liste des Camping Cars disponibles en location</h1>
+
+    {# Formulaire de recherche par marque de camping car #}
+    <form method="POST">
+        <input type="text" name="marque">
+        <input type="submit" name="recherche">
+    </form>
+
+    {# Si un utilisateur est connecté #}
+    {% if app.user %}
+        {# Lien vers Réservation #}
+        <a class="nav-link" href="{{ path('reservation_new_camping') }}"><img src="/img/reserver.jpg" height="50" width="60">
+    {% endif %}
+    {# Div pour afficher les camping cars #}
+    <div class="container">
+        <div class ="row">
+            {# Boucle for parcourant tous les camping cars de la Table camping_car #}
+            {% for camping_car in camping_car %}
+                <div class='col-md-4'>
+                    {# Si un utilisateur est connecté #}
+                    {% if app.user %}
+                        {# Bouton permettant de modifier un camping car #}
+                        <a class="btn btn-warning" href="{{ path('camping_car_edit', {'id': camping_car.id}) }}" role="button">Modifier</a>
+                    {% endif %}
+                    {# Images des camping cars, on peut consulter un camping car en cliquant sur l'image #}
+                    <a href={{ path('camping_car_show', {'id': camping_car.id}) }} title="{{ camping_car.marque }}">
+                        <img src='./img/campingcar/{{ camping_car.id }}.jpg' width="350" height="200" />
+                    </a>
+                    {# Div pour la description #}
+                    <div class='description'>
+                        <h2><b>{{ camping_car.marque }}</b></h2>
+                        <p><u>Prix :</u> {{ camping_car.prix }} €/Jour</p>
+                        <p><u>Description :</u>{{ camping_car.description }}</p>
+                    </div>
+                </div>
+            {# Sinon s'il n'y a pas de camping cars #}
+            {% else %}
+                {# Affichage d'un message #}
+                <tr>
+                    <td colspan="8">Aucun résultat pour votre recherche</td>
+                </tr>
+            {% endfor %}
+            {# Lien de Retour #}
+            <a class="nav-link" href="{{ path('camping_car_index') }}"><img src="/img/retour.jpg" height="50" width="60"></a>
+        </div>
+    </div>
+{% endblock %}

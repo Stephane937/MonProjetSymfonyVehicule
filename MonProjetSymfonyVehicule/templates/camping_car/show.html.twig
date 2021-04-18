@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CampingCar{% endblock %}
+
+{% block body %}
+
+    <h1>{{ camping_car.marque }}</h1>
+    <img src='../img/campingcar/{{ camping_car.id}}.jpg' height="200" width="350">
+
+    <div class="container">
+        <div class="row">
+            {% for i in 2..5 %}
+                <div class="col-xs-3">
+                    <a href='../img/campingcar/{{ camping_car.id }}.{{ i }}.jpg' class="thumbnail">
+                        <img src='../img/campingcar/{{ camping_car.id }}.{{ i }}.jpg' height="60" width="87.5" alt="Image {{ i }}" />
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ camping_car.id }}</td>
+        </tr>
+        <tr>
+            <th>Marque</th>
+            <td>{{ camping_car.marque }}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ camping_car.description }}</td>
+        </tr>
+        <tr>
+            <th>Prix</th>
+            <td>{{ camping_car.prix }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-secondary" href="{{ path('camping_car_index') }}" role="button">Liste des Camping-Cars</a>
+    {% if app.user %}
+        <a class="btn btn-warning" href="{{ path('camping_car_edit', {'id': camping_car.id}) }}" role="button">Modifier</a>
+        {{ include('camping_car/_delete_form.html.twig') }}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+
+    <title>{% block title %}Location Véhicule{% endblock %}</title>
+
+    <link rel= "stylesheet"
+          href="https://bootswatch.com/4/superhero/bootstrap.min.css">
+    {% block stylesheets %}{% endblock %}
+
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Accueil</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor02">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item ">
+                <a class="nav-link" href="/voiture"><img src="/img/voiture.jpg" height="50" width="50">
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="/utilitaires"><img src="/img/utilitaire.jpg" height="50" width="50">
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="/campingcar"><img src="/img/camping.jpg" height="50" width="60">
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+            <li class="nav-item dropdown">
+                {% if not app.user %}
+            <li class="nav-item ">
+                <a class="nav-link" href="/registration"><img src="/img/register.jpg" height="50" width="110">
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="/login"><img src="/img/login.jpg" height="50" width="150">
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            {% else %}
+                <li class="nav-item ">
+                    <a class="nav-link" href="/logout"><img src="/img/logout.png" height="50" width="60">
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+
+
+</nav>
+
+<div class = "container">
+    {% block body %}{% endblock %}
+</div>
+
+<main role="main">
+
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">Site de Location de Véhicules</h1>
+            <p class="lead text-muted">Liste des Véhicules disponibles en location</p>
+            {% if app.user %}
+                <a class="btn btn-success" href="{{ path('voiture_new') }}" role="button">Ajouter une nouvelle Voiture</a>
+                <a class="btn btn-success" href="{{ path('utilitaires_new') }}" role="button">Ajouter un nouveau Véhicule Utilitaire</a>
+                <a class="btn btn-success" href="{{ path('camping_car_new') }}" role="button">Ajouter un nouveau Camping Car</a>
+            {% endif %}
+        </div>
+    </section>
+
+
+
+        <div class="container">
+            <div class ="row">
+                {% for voiture in voitures %}
+
+                    <div class='col-md-4'>
+                        {% if app.user %}
+                            <a class="btn btn-warning" href="{{ path('voiture_edit', {'id': voiture.id}) }}" role="button">Modifier</a>
+                        {% endif %}
+                        <a href={{ path('voiture_show', {'id': voiture.id}) }} title="{{ voiture.marque }}">
+                            <img src='./img/{{ voiture.id }}.jpg' width="350" height="200" />
+                        </a>
+
+                        <div class='description'>
+                            <h2><b>{{ voiture.marque }} </b></h2>
+                            <p><u>Prix :</u> {{ voiture.prix }} €/Jour</p>
+
+                        </div>
+                    </div>
+
+                {% endfor %}
+                {% for utilitaire in utilitaires %}
+
+                    <div class='col-sm-4 col-md-4'>
+                        {% if app.user %}
+                            <a class="btn btn-warning" href="{{ path('utilitaires_edit', {'id': utilitaire.id}) }}" role="button">Modifier</a>
+                        {% endif %}
+                        <a href={{ path('utilitaires_show', {'id': utilitaire.id}) }} title="{{ utilitaire.marqueU }}">
+                            <img src='./img/utilitaire/{{ utilitaire.id }}.jpg' width="350" height="200" />
+                        </a>
+
+                        <div class='description'>
+                            <h2><b>{{ utilitaire.marqueU }} </b></h2>
+                            <p><u>Prix :</u> {{ utilitaire.prixU }} €/Jour</p>
+
+                        </div>
+                    </div>
+
+                {% endfor %}
+
+                {% for camping_car in camping_cars %}
+
+                    <div class='col-sm-4 col-md-4'>
+                        {% if app.user %}
+                            <a class="btn btn-warning" href="{{ path('camping_car_edit', {'id': camping_car.id}) }}" role="button">Modifier</a>
+                        {% endif %}
+                        <a href={{ path('camping_car_show', {'id': camping_car.id}) }} title="{{ camping_car.marque }}">
+                            <img src='./img/campingcar/{{ camping_car.id }}.jpg' width="350" height="200" />
+                        </a>
+
+                        <div class='description'>
+                            <h2><b>{{ camping_car.marque }} </b></h2>
+                            <p><u>Prix :</u> {{ camping_car.prix }} €/Jour</p>
+
+                        </div>
+                    </div>
+
+                {% endfor %}
+            </div>
+        </div>
+</main>
+
+{% block javascripts %}{% endblock %}
+<footer class=" text-white text-center text-lg-start">
+
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: #7d85a0">
+        © 2021 Copyright : Designed by Stéphane SELVATHASAN
+        <a class="text-white">Projet PHP Symfony</a>
+    </div>
+    <!-- Copyright -->
+</footer>
+</body>
+</html>

@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Véhicules Utilitaires Location {% endblock %}
+
+{% block body %}
+
+    <h1>Liste des Véhicules Utilitaires disponibles en location</h1>
+
+    {% if app.user %}
+        <a class="nav-link" href="{{ path('reservation_new_util') }}"><img src="/img/reserver.jpg" height="50" width="60">
+    {% endif %}
+
+    <a class="btn btn-secondary" href="{{ path('utilitaires_recherche')}}" role="button">Recherche par Marque</a>
+    <a class="btn btn-secondary" href="{{ path('utilitaires_rechercheAvancee')}}" role="button">Recherche par Prix</a>
+
+<div class="container">
+    <div class ="row">
+
+    {% for utilitaire in utilitaires %}
+
+        <div class='col-md-4'>
+            {% if app.user %}
+                <a class="btn btn-warning" href="{{ path('utilitaires_edit', {'id': utilitaire.id}) }}" role="button">Modifier</a>
+            {% endif %}
+            <a href={{ path('utilitaires_show', {'id': utilitaire.id}) }} title="{{ utilitaire.marqueU }}">
+                <img src='./img/utilitaire/{{ utilitaire.id }}.jpg' width="350" height="200" />
+            </a>
+
+            <div class='description'>
+                <h2><b>{{ utilitaire.marqueU }}</b></h2>
+                <p><u>Prix :</u> {{ utilitaire.prixU }} €/Jour</p>
+                <p><u>Description :</u>{{ utilitaire.description }}</p>
+            </div>
+        </div>
+
+    {% else %}
+        <tr>
+            <td colspan="8">Aucun résultat pour votre recherche</td>
+        </tr>
+    {% endfor %}
+    </div>
+    <center>{{ knp_pagination_render(utilitaires) }}</center>
+
+</div>
+{% endblock %}
